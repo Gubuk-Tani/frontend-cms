@@ -1,9 +1,11 @@
-<template>
-  <Tutorial />
-</template>
+<template></template>
 
 <script>
 export default {
-  name: 'IndexPage',
+  layout: 'LayoutDashboard',
+  middleware: 'auth',
+  fetch() {
+    this.$router.push({ name: 'overview' })
+  },
 }
 </script>

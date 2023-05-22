@@ -30,7 +30,7 @@
                 d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
-            <p class="max-sm:hidden text-sm">Add User</p>
+            <p class="text-sm">Add User</p>
           </button>
         </div>
 

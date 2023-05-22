@@ -66,12 +66,16 @@
 
       <!-- Password -->
       <div class="form-group">
-        <label for="" class="input-label required">Password</label>
+        <label
+          for=""
+          :class="user_id ? 'input-label ' : 'input-label required'"
+          >{{ user_id ? 'Change Password' : 'Password' }}</label
+        >
 
         <input
           type="password"
           class="input-field"
-          placeholder="Password"
+          :placeholder="user_id ? 'Change Password' : 'Password'"
           v-model="user.password"
           @input="checkPassword($event.target.value)"
         />
@@ -87,7 +91,9 @@
 
       <!-- Password Confirmation -->
       <div class="form-group">
-        <label for="" class="input-label required">Password Confirmation</label>
+        <label for="" :class="user_id ? 'input-label ' : 'input-label required'"
+          >Password Confirmation</label
+        >
 
         <input
           type="password"

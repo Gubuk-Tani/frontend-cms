@@ -1,7 +1,7 @@
 <template>
   <div class="side-bar max-md:side-bar-bottom max-lg:side-bar-collapse">
     <div
-      class="px-6 pb-6 gap-y-8 flex flex-col max-md:gap-y-0 max-md:h-full max-md:py-[21px] max-md:px-[60px] max-sm:px-0"
+      class="px-6 pb-6 gap-y-8 flex flex-col max-md:gap-y-0 max-md:h-full max-md:py-[21px] max-md:px-[60px] max-sm:px-0 nav-container"
     >
       <!-- Logo -->
       <div class="h-[60px] flex items-center justify-between max-md:hidden">

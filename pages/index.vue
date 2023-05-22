@@ -2,8 +2,8 @@
 
 <script>
 export default {
-  layout: 'LayoutDashboard',
   middleware: 'auth',
+  layout: 'LayoutDashboard',
   fetch() {
     this.$router.push({ name: 'overview' })
   },

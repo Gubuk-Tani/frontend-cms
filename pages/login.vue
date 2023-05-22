@@ -3,22 +3,22 @@
   <main class="flex justify-center items-center p-[24px] bg-dark dark">
     <!-- Content -->
     <section
-      class="py-[60px] max-w-[450px] flex flex-col items-center flex-grow h-full justify-center"
+      class="pt-[40px] pb-[60px] max-w-[450px] flex flex-col items-center flex-grow h-full justify-center"
     >
       <!-- Logo -->
-      <div class="h-[60px] flex items-center justify-between">
-        <a href="#" class="flex justify-center items-center gap-3 px-[5.5px]">
+      <div class="flex items-center justify-between">
+        <a href="#" class="flex gap-1 justify-center items-center">
           <!-- Logo -->
           <img
             :src="imgUrl + $store.state.settings.app_logo"
             alt=""
-            class="h-[80px]"
+            class="h-[80px] max-sm:h-[60px]"
             v-if="$store.state.settings.app_logo"
           />
 
           <!-- App Name -->
           <p
-            class="text-2xl font-montserrat font-bold text-white tracking-wide"
+            class="text-2xl max-sm:text-xl font-montserrat font-bold text-white tracking-wide"
           >
             {{
               $store.state.settings.app_name
@@ -31,10 +31,10 @@
 
       <!-- Login Form -->
       <form
-        class="w-full card form-container mt-[40px]"
+        class="w-full card form-container mt-[20px]"
         @submit.prevent="userLogin"
       >
-        <h1 class="text-3xl font-bold text-dark text-center">Log In</h1>
+        <h1 class="font-bold text-dark text-center">Log In</h1>
         <p class="mt-1 leading-7 text-center mb-2 text-grey-80">
           Log in to start your session
         </p>
@@ -159,7 +159,7 @@ export default {
 
       try {
         let response = await this.$auth.loginWith('local', { data: this.login })
-        this.$router.push('/')
+        this.$router.push({ name: 'overview' })
       } catch (err) {
         this.validation = err.response.data
       }

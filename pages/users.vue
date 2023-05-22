@@ -1,16 +1,14 @@
 <template>
   <!-- Main -->
-  <main
-    class="ml-[220px] max-lg:ml-[88px] max-md:ml-0 max-w-[100%] flex justify-center my-[60px] p-[24px] ease-in-out duration-200 max-md:flex-col max-md:mb-[88px]"
-  >
+  <main class="main-dashboard">
     <!-- Content -->
     <section
       class="flex flex-row justify-between gap-6 flex-grow max-md:max-w-none"
     >
-      <div class="flex flex-col gap-8 w-full">
+      <div class="flex flex-col gap-8 max-sm:gap-6 w-full">
         <!-- Headline -->
         <div class="flex justify-between">
-          <h1 class="font-bold text-dark self-center py-1">User List</h1>
+          <h1 class="font-bold text-2xl text-dark self-center py-1">User List</h1>
           <button
             type="button"
             class="btn btn-primary p-3 self-center flex flex-row gap-1.5 items-center max-sm:p-[10px]"
@@ -32,6 +30,37 @@
             </svg>
             <p class="text-sm">Add User</p>
           </button>
+        </div>
+
+        <!-- Search -->
+        <div class="flex justify-between">
+          <div class="relative w-full">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+            >
+              <svg
+                class="w-5 h-5 text-gray-500"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="table-search-users"
+              class="block p-2 pl-10 text-sm text-gray-900 w-full input-field"
+              placeholder="Search for users"
+              v-model="query.search"
+              v-on:keyup.enter="$fetch()"
+            />
+          </div>
         </div>
 
         <!-- User List -->
@@ -179,9 +208,10 @@
           >
             <span class="text-sm font-normal text-gray-500"
               >Showing
-              <span class="font-semibold text-gray-900">{{
-                users.from + ' - ' + users.to
-              }}</span>
+              <span class="font-semibold text-gray-900"
+                >{{ users.from ? users.from : 0 }} -
+                {{ users.to ? users.to : 0 }}</span
+              >
               of
               <span class="font-semibold text-gray-900">{{
                 users.total
@@ -262,10 +292,13 @@ export default {
       imgUrl: process.env.imgUrl,
       users: [],
 
-      // Pagagination
-      page: 1,
-
       // Options
+      query: {
+        page: 1,
+        search: null,
+        limit: 10,
+      },
+
       modal: false,
 
       // Edit User
@@ -273,15 +306,20 @@ export default {
     }
   },
   async fetch() {
+    const query = {}
+
+    for (const [key, value] of Object.entries(this.query)) {
+      if (value) {
+        query[key] = value
+      }
+    }
+
     const resUsers = await this.$axios.get('/api/users', {
-      params: {
-        limit: 20,
-        page: this.page,
-      },
+      params: query,
     })
 
     this.users = resUsers.data.result
-    this.page = this.users.current_page
+    this.query.page = this.users.current_page
   },
   computed: {
     // Get user list
@@ -297,22 +335,22 @@ export default {
   methods: {
     // Change Page
     changePage(page) {
-      this.page = page
+      this.query.page = page
       this.$fetch()
     },
 
     // Previous Page
     previousPage() {
-      if (this.page != 1) {
-        this.page = this.page - 1
+      if (this.query.page != 1) {
+        this.query.page = this.query.page - 1
         this.$fetch()
       }
     },
 
     // Next Page
     nextPage() {
-      if (this.page != this.users.last_page) {
-        this.page = this.page + 1
+      if (this.query.page != this.users.last_page) {
+        this.query.page = this.query.page + 1
         this.$fetch()
       }
     },

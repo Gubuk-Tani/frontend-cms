@@ -1,7 +1,7 @@
 <template>
   <!-- Header -->
   <header
-    class="bg-white px-[24px] top-0 fixed w-full z-[900] flex flex-row justify-between h-[60px] print:hidden"
+    class="bg-white px-[24px] max-sm:px-[16px] top-0 fixed w-full z-[900] flex flex-row justify-between h-[60px] print:hidden"
   >
     <!-- Logo Details-->
     <div class="flex items-center justify-between" v-if="details">

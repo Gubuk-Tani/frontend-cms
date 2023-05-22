@@ -35,6 +35,10 @@
   .swal2-popup {
     @apply font-inter text-sm;
   }
+
+  .main-dashboard {
+    @apply ml-[220px] max-lg:ml-[88px] max-md:ml-0 max-w-[100%] flex justify-center my-[60px] p-[24px] max-sm:p-[16px] ease-in-out duration-200 max-md:flex-col max-md:mb-[88px];
+  }
 }
 
 @layer components {

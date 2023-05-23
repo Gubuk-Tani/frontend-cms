@@ -34,34 +34,48 @@
           </button>
         </div>
 
-        <!-- Search -->
-        <div class="flex justify-between">
-          <div class="relative w-full">
-            <div
-              class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-            >
-              <svg
-                class="w-5 h-5 text-gray-500"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+        <div class="flex gap-6 justify-between">
+          <!-- Type -->
+          <select
+            class="input-field"
+            v-model="query.type"
+            @input="setType($event.target.value)"
+          >
+            <option value="">All</option>
+            <option value="community">Community</option>
+            <option value="disease">Disease</option>
+            <option value="pesticide">Pesticide</option>
+          </select>
+
+          <!-- Search -->
+          <div class="flex justify-between w-full">
+            <div class="relative w-full">
+              <div
+                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
+                <svg
+                  class="w-5 h-5 text-gray-500"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="table-search-articles"
+                class="block p-2 pl-10 text-sm text-gray-900 w-full h-full input-field"
+                placeholder="Search for articles"
+                v-model="query.search"
+                v-on:keyup.enter="$fetch()"
+              />
             </div>
-            <input
-              type="text"
-              id="table-search-articles"
-              class="block p-2 pl-10 text-sm text-gray-900 w-full input-field"
-              placeholder="Search for articles"
-              v-model="query.search"
-              v-on:keyup.enter="$fetch()"
-            />
           </div>
         </div>
 
@@ -69,10 +83,10 @@
         <div class="flex flex-col gap-4 w-full">
           <!-- Show Content -->
           <div
-            class="overflow-x-auto flex flex-wrap max-sm:flex-col gap-4 justify-justify"
+            class="overflow-x-auto flex flex-wrap max-sm:flex-col gap-5 justify-justify pb-4"
           >
             <div
-              class="bg-white rounded-md overflow-clip p-0 w-[200px] flex-grow max-sm:w-full cursor-pointer"
+              class="bg-white rounded-md overflow-clip p-0 w-[200px] flex-grow max-sm:w-full cursor-pointer shadow-sm hover:shadow-lg"
               v-for="item in listArticles"
               @click="showModal(item.id)"
             >
@@ -86,8 +100,27 @@
                   "
                   alt=""
                   class="w-full h-[150px] object-cover"
+                  v-if="item.article_images[0]"
                 />
+                <div
+                  class="w-full h-[150px] flex justify-center items-center bg-gray-200"
+                  v-else
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="w-14 h-14 fill-gray-400"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
               </div>
+
               <div class="flex flex-col gap-1 p-4">
                 <!-- Title -->
                 <div class="text-lg text-gray-900 font-semibold">
@@ -199,9 +232,10 @@ export default {
 
       // Options
       query: {
-        page: 1,
+        type: '',
         search: null,
         limit: 10,
+        page: 1,
       },
 
       modal: false,
@@ -270,6 +304,12 @@ export default {
     closeModal() {
       this.modal = false
       this.article_id = null
+    },
+
+    // Set Type
+    setType(value) {
+      this.query.type = value
+      this.$fetch()
     },
   },
 }

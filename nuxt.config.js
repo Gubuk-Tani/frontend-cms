@@ -17,10 +17,10 @@ export default {
 
       { name: 'og:title', content: 'Gubuk Tani' },
       { name: 'og:description', content: 'Petani handal bersama Gubuk Tani' },
-      { name: 'og:image', content: 'assets/images/gubuk-tani-favicon.png' },
+      { name: 'og:image', content: 'assets/images/gubuk-tani-banner.jpg' },
       { name: 'og:url', content: 'https://admin.gubuktani.com' },
 
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: 'Petani handal bersama Gubuk Tani' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: 'assets/images/gubuk-tani-favicon.png' }],

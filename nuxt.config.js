@@ -14,10 +14,16 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+
+      { name: 'og:title', content: 'Gubuk Tani' },
+      { name: 'og:description', content: 'Petani handal bersama Gubuk Tani' },
+      { name: 'og:image', content: 'assets/images/gubuk-tani-favicon.png' },
+      { name: 'og:url', content: 'https://admin.gubuktani.com' },
+
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/images/gubuk-tani-favicon.png' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: 'assets/images/gubuk-tani-favicon.png' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css

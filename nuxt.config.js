@@ -17,7 +17,7 @@ export default {
 
       { name: 'og:title', content: 'Gubuk Tani' },
       { name: 'og:description', content: 'Petani handal bersama Gubuk Tani' },
-      { name: 'og:image', content: '/assets/images/gubuk-tani-banner.jpg' },
+      { name: 'og:image', content: 'https://admin.gubuktani.com/assets/images/gubuk-tani-banner.jpg' },
       { name: 'og:url', content: 'https://admin.gubuktani.com' },
 
       { hid: 'description', name: 'description', content: 'Petani handal bersama Gubuk Tani' },

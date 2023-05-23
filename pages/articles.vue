@@ -1,18 +1,276 @@
 <template>
-  <main
-    class="ml-[220px] max-lg:ml-[88px] max-md:ml-0 max-w-[100%] flex justify-center my-[60px] p-[24px] ease-in-out duration-200 max-md:flex-col max-md:mb-[88px]"
-  >
+  <!-- Main -->
+  <main class="main-dashboard">
+    <!-- Content -->
     <section
-      class="flex flex-row justify-between gap-6 flex-grow max-md:max-w-none items-start"
+      class="flex flex-row justify-between gap-6 flex-grow max-md:max-w-none"
     >
-      Articles Coming Soon...
+      <div class="flex flex-col gap-8 max-sm:gap-6 w-full">
+        <!-- Headline -->
+        <div class="flex justify-between">
+          <h1 class="font-bold text-2xl text-dark self-center py-1">
+            Article List
+          </h1>
+          <button
+            type="button"
+            class="btn btn-primary p-3 self-center flex flex-row gap-1.5 items-center max-sm:p-[10px]"
+            @click="showModal(null)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+            <p class="text-sm">Add Article</p>
+          </button>
+        </div>
+
+        <!-- Search -->
+        <div class="flex justify-between">
+          <div class="relative w-full">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+            >
+              <svg
+                class="w-5 h-5 text-gray-500"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="table-search-articles"
+              class="block p-2 pl-10 text-sm text-gray-900 w-full input-field"
+              placeholder="Search for articles"
+              v-model="query.search"
+              v-on:keyup.enter="$fetch()"
+            />
+          </div>
+        </div>
+
+        <!-- Article List -->
+        <div class="flex flex-col gap-4 w-full">
+          <!-- Show Content -->
+          <div
+            class="overflow-x-auto flex flex-wrap max-sm:flex-col gap-4 justify-justify"
+          >
+            <div
+              class="bg-white rounded-md overflow-clip p-0 w-[200px] flex-grow max-sm:w-full cursor-pointer"
+              v-for="item in listArticles"
+              @click="showModal(item.id)"
+            >
+              <div>
+                <!-- Images -->
+                <img
+                  :src="
+                    item.article_images.length > 0
+                      ? imgUrl + item.article_images[0].image
+                      : ''
+                  "
+                  alt=""
+                  class="w-full h-[150px] object-cover"
+                />
+              </div>
+              <div class="flex flex-col gap-1 p-4">
+                <!-- Title -->
+                <div class="text-lg text-gray-900 font-semibold">
+                  {{ item.title }}
+                </div>
+
+                <!-- Content -->
+                <div class="text-sm text-gray-400 line-clamp-2">
+                  {{ item.content }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <nav
+            class="flex items-center justify-between pt-4"
+            aria-label="Table navigation"
+          >
+            <span class="text-sm font-normal text-gray-500"
+              >Showing
+              <span class="font-semibold text-gray-900"
+                >{{ articles.from ? articles.from : 0 }} -
+                {{ articles.to ? articles.to : 0 }}</span
+              >
+              of
+              <span class="font-semibold text-gray-900">{{
+                articles.total
+              }}</span></span
+            >
+            <ul class="inline-flex items-center -space-x-px">
+              <li class="cursor-pointer" v-for="page in listPages">
+                <!-- Inactive -->
+                <div
+                  class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+                  v-if="
+                    !page.active &&
+                    page.label != '&laquo; Previous' &&
+                    page.label != 'Next &raquo;'
+                  "
+                  @click="changePage(page.label)"
+                >
+                  {{ page.label }}
+                </div>
+
+                <!-- Active -->
+                <div
+                  aria-current="page"
+                  class="z-10 px-3 py-2 leading-tight text-white border border-primary-1 bg-primary-1 hover:bg-primary-2 hover:text-white"
+                  v-if="page.active"
+                >
+                  {{ page.label }}
+                </div>
+
+                <!-- Previous -->
+                <div
+                  class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 rounded-l-md"
+                  v-if="!page.active && page.label == '&laquo; Previous'"
+                  @click="previousPage()"
+                >
+                  &laquo;
+                  <span class="max-sm:hidden"> Previous</span>
+                </div>
+
+                <!-- Next -->
+                <div
+                  class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 rounded-r-md"
+                  v-if="!page.active && page.label == 'Next &raquo;'"
+                  @click="nextPage()"
+                >
+                  <span class="max-sm:hidden">Next </span>
+                  &raquo;
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
     </section>
+
+    <!-- Modal -->
+    <div
+      class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-[999]"
+      v-if="modal"
+      @click="closeModal"
+    >
+      <div
+        class="w-[600px] max-md:w-[90%] card p-4 bg-white overflow-y-auto shadow-lg h-[90%]"
+        @click.stop
+      >
+        <FormArticle
+          class=""
+          :article_id="article_id"
+          @close-form="closeModal"
+        />
+      </div>
+    </div>
   </main>
 </template>
 
 <script>
 export default {
-  layout: 'LayoutDashboard',
   middleware: 'auth',
+  layout: 'LayoutDashboard',
+  data() {
+    return {
+      imgUrl: process.env.imgUrl,
+      articles: [],
+
+      // Options
+      query: {
+        page: 1,
+        search: null,
+        limit: 10,
+      },
+
+      modal: false,
+
+      // Edit Article
+      article_id: null,
+    }
+  },
+  async fetch() {
+    const query = {}
+
+    for (const [key, value] of Object.entries(this.query)) {
+      if (value) {
+        query[key] = value
+      }
+    }
+
+    const resArticles = await this.$axios.get('/api/article', {
+      params: query,
+    })
+
+    this.articles = resArticles.data.result
+    this.query.page = this.articles.current_page
+  },
+  computed: {
+    // Get article list
+    listArticles() {
+      return this.articles.data
+    },
+
+    // Get page list
+    listPages() {
+      return this.articles.links
+    },
+  },
+  methods: {
+    // Change Page
+    changePage(page) {
+      this.query.page = page
+      this.$fetch()
+    },
+
+    // Previous Page
+    previousPage() {
+      if (this.query.page != 1) {
+        this.query.page = this.query.page - 1
+        this.$fetch()
+      }
+    },
+
+    // Next Page
+    nextPage() {
+      if (this.query.page != this.articles.last_page) {
+        this.query.page = this.query.page + 1
+        this.$fetch()
+      }
+    },
+
+    // Open Modal
+    showModal(id) {
+      this.modal = true
+      this.article_id = id
+    },
+
+    // Close Modal
+    closeModal() {
+      this.modal = false
+      this.article_id = null
+    },
+  },
 }
 </script>

@@ -23,8 +23,8 @@
         </select>
 
         <!-- Validation -->
-        <p class="text-red-500 text-xs italic" v-if="validation.errors?.role">
-          {{ validation.errors?.role[0] }}
+        <p class="text-red-500 text-xs italic" v-if="validation.errors?.type">
+          {{ validation.errors?.type[0] }}
         </p>
       </div>
 

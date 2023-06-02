@@ -10,7 +10,7 @@
           :src="
             $store.state.settings.app_logo
               ? imgUrl + $store.state.settings.app_logo
-              : 'assets/images/gubuk-tani-logo.png'
+              : '../assets/images/gubuk-tani-logo.png'
           "
           alt=""
           class="h-[40px]"
@@ -32,7 +32,7 @@
           :src="
             $store.state.settings.app_logo
               ? imgUrl + $store.state.settings.app_logo
-              : 'assets/images/gubuk-tani-logo.png'
+              : '../assets/images/gubuk-tani-logo.png'
           "
           alt=""
           class="h-[40px]"
@@ -61,7 +61,7 @@
             :src="
               this.$auth.user.avatar
                 ? imgUrl + this.$auth.user.avatar
-                : 'assets/images/user.png'
+                : '../assets/images/user.png'
             "
             alt=""
             class="w-[32px] mr-1"

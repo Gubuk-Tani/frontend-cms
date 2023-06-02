@@ -83,7 +83,7 @@
         <div class="flex flex-col gap-4 w-full">
           <!-- Show Content -->
           <div
-            class="overflow-x-auto flex flex-wrap max-sm:flex-col gap-5 justify-justify pb-4"
+            class="overflow-x-auto flex flex-wrap max-sm:flex-col gap-5 justify-between pb-4"
           >
             <div
               class="bg-white rounded-md overflow-clip p-0 w-[200px] flex-grow max-sm:w-full cursor-pointer shadow-sm hover:shadow-lg"

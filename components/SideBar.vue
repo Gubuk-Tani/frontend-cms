@@ -13,7 +13,7 @@
             :src="
               $store.state.settings.app_logo
                 ? imgUrl + $store.state.settings.app_logo
-                : 'assets/images/gubuk-tani-logo.png'
+                : '../assets/images/gubuk-tani-logo.png'
             "
             alt=""
             class="h-[40px]"
@@ -123,7 +123,7 @@
         </NuxtLink>
 
         <!-- Disease Detections -->
-        <NuxtLink :to="{ name: 'ml' }" class="nav-link">
+        <NuxtLink :to="{ name: 'detections' }" class="nav-link">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -137,7 +137,7 @@
             />
           </svg>
 
-          <p>Detectors</p>
+          <p>Detections</p>
         </NuxtLink>
 
         <!-- Settings -->

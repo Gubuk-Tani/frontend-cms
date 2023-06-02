@@ -33,15 +33,15 @@
 
         <!-- Banner -->
         <div
-          class="flex gap-8 items-center bg-white rounded-md overflow-clip group"
+          class="flex items-center bg-white rounded-md overflow-clip group max-sm:flex-col max-sm:items-start"
         >
           <img
             :src="plant.image ? imgUrl + plant.image : ''"
             alt=""
-            class="w-[400px] h-[200px] object-cover"
+            class="w-[400px] h-[200px] max-sm:w-full object-cover"
             v-if="plant.image"
           />
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2 p-8 max-sm:pt-6">
             <div class="flex gap-2 items-center">
               <h1 class="font-semibold text-3xl text-dark">{{ plant.name }}</h1>
               <button type="button" @click="showModal('formPlant', null)">

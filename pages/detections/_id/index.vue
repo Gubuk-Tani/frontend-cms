@@ -102,23 +102,75 @@
               >
                 <tr>
                   <th scope="col" class="px-6 py-3">Name</th>
+                  <th scope="col" class="px-6 py-3">Linked Disease</th>
                   <th scope="col" class="px-6 py-3"></th>
                 </tr>
               </thead>
               <tbody class="overflow-y-auto">
                 <tr
                   class="bg-white border-b hover:bg-gray-50"
-                  v-for="(item, index) in labels"
-                  :key="item.id"
+                  v-for="(item, index) in listLabel"
+                  :key="item.label.id"
                 >
+                  <th
+                    scope="row"
+                    class="px-6 py-4 text-gray-900 whitespace-nowrap"
+                  >
+                    <div class="text-base font-semibold">
+                      {{ item.label.name }}
+                    </div>
+                  </th>
+                  <!-- Linked Disease -->
                   <td class="px-6 py-4">
-                    {{ item.name }}
+                    <!-- Linked Disease -->
+                    <div class="flex flex-col gap-1" v-if="item.linked_disease">
+                      <div
+                        class="flex gap-2 p-2 items-center border border-gray-200 rounded-md hover:border-gray-300"
+                      >
+                        <!-- Images -->
+                        <img
+                          :src="
+                            item.linked_disease.image
+                              ? imgUrl + item.linked_disease.image
+                              : ''
+                          "
+                          alt=""
+                          class="w-[40px] h-[40px] object-cover rounded-sm"
+                          v-if="item.linked_disease.image"
+                        />
+
+                        <div
+                          class="w-[40px] h-[40px] flex justify-center items-center bg-gray-200 rounded-sm"
+                          v-else
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            class="w-14 h-14 fill-gray-400"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </div>
+
+                        <!-- Title -->
+                        <div
+                          class="text-md text-gray-900 font-medium line-clamp-2 w-full"
+                        >
+                          {{ item.linked_disease.name }}
+                        </div>
+                      </div>
+                    </div>
                   </td>
                   <td class="px-6 py-4 w-4">
                     <!-- Modal toggle -->
                     <div
                       class="font-semibold text-primary-1 cursor-pointer"
-                      @click="showModal('formLabel', item.id)"
+                      @click="showModal('formLabel', item.label.id)"
                     >
                       Edit
                     </div>
@@ -169,6 +221,8 @@ export default {
       plant: [],
       labels: [],
 
+      labelsWithLinkedDisease: [],
+
       // Plant
       plant_id: null,
 
@@ -189,6 +243,27 @@ export default {
     this.labels = resLabels.data.result.labels
 
     this.modalType = null
+
+    // Linked Disease
+    for (let i = 0; i < this.labels.length; i++) {
+      const resLinkedDisease = await this.$axios.get('/api/disease', {
+        params: {
+          tag: this.labels[i].name,
+        },
+      })
+
+      const item = {
+        label: this.labels[i],
+        linked_disease: resLinkedDisease.data.result.disease,
+      }
+
+      this.labelsWithLinkedDisease.push(item)
+    }
+  },
+  computed: {
+    listLabel() {
+      return this.labelsWithLinkedDisease
+    },
   },
   methods: {
     // Open Modal

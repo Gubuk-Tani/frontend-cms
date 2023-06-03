@@ -84,7 +84,7 @@
                 <img
                   :src="item.image ? imgUrl + item.image : ''"
                   alt=""
-                  class="w-full h-[100px] object-cover"
+                  class="w-full h-[150px] object-cover"
                   v-if="item.image"
                 />
 

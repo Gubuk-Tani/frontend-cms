@@ -112,8 +112,9 @@ export default {
       disease: {
         name: null,
         description: null,
-        tags: null,
         image: null,
+        article_id: null,
+        tags: null,
       },
 
       current_image: null,
@@ -132,6 +133,7 @@ export default {
       this.disease.name = resDisease.data.result.disease.name
       this.disease.description = resDisease.data.result.disease.description
       this.disease.image = resDisease.data.result.disease.image
+      this.disease.article_id = resDisease.data.result.disease.article_id
 
       let tags = []
 
@@ -148,6 +150,7 @@ export default {
       this.disease.content = null
       this.disease.image = null
       this.disease.tags = null
+      this.disease.article_id = null
 
       this.current_image = null
     }
@@ -164,7 +167,7 @@ export default {
       let data = new FormData()
 
       for (const [key, value] of Object.entries(this.disease)) {
-        if (key == 'image' && value == this.current_image) {
+        if (key == 'image' && typeof value == 'string') {
           continue
         }
 

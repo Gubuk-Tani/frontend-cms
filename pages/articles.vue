@@ -122,6 +122,13 @@
               </div>
 
               <div class="flex flex-col gap-1 p-4">
+                <!-- Type -->
+                <div class="flex flex-wrap items-start">
+                  <div class="text-sm text-green-600">
+                    {{ item.type }}
+                  </div>
+                </div>
+
                 <!-- Title -->
                 <div class="text-lg text-gray-900 font-semibold">
                   {{ item.title }}
@@ -130,6 +137,17 @@
                 <!-- Content -->
                 <div class="text-sm text-gray-400 line-clamp-2">
                   {{ item.content }}
+                </div>
+
+                <!-- Tags -->
+                <div class="flex flex-wrap items-start mt-2">
+                  <div
+                    class="text-sm text-gray-400 bg-gray-100 rounded-md py-1 px-2"
+                    v-for="tag in item.tags"
+                    v-if="tag.tag.tag"
+                  >
+                    {{ tag.tag.tag }}
+                  </div>
                 </div>
               </div>
             </div>

@@ -74,7 +74,7 @@
             class="overflow-x-auto flex flex-wrap max-sm:flex-col gap-5 justify-start pb-4"
           >
             <div
-              class="bg-white rounded-md overflow-clip p-0 w-[300px] max-sm:w-full cursor-pointer shadow-sm hover:shadow-lg group"
+              class="bg-white rounded-md overflow-clip p-0 w-[300px] max-sm:w-full cursor-pointer shadow-sm hover:shadow-lg group flex flex-col justify-start"
               v-for="item in listDiseases"
               @click="showModal('formDisease', item.id)"
             >
@@ -107,7 +107,7 @@
                 </div>
               </div>
 
-              <div class="flex flex-col gap-1 p-4 justify-between">
+              <div class="flex flex-col gap-1 p-4 justify-between flex-grow">
                 <div class="flex flex-col gap-1">
                   <!-- Name -->
                   <div class="text-lg text-gray-900 font-semibold">
@@ -117,6 +117,17 @@
                   <!-- Description -->
                   <div class="text-sm text-gray-400 line-clamp-2">
                     {{ item.description }}
+                  </div>
+
+                  <!-- Tags -->
+                  <div class="flex flex-wrap items-start mt-2">
+                    <div
+                      class="text-sm text-gray-400 bg-gray-100 rounded-md py-1 px-2"
+                      v-for="tag in item.tags"
+                      v-if="tag.tag.tag"
+                    >
+                      {{ tag.tag.tag }}
+                    </div>
                   </div>
                 </div>
 

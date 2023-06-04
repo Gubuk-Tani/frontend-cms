@@ -52,7 +52,7 @@
           v-if="$auth.user && $auth.user.role != 'admin'"
         >
           <p class="text-red-600 text-center">
-            Anda bukan Admin. Hubungi Admin jika ada kesalahan.
+            Anda Bukan Admin. Hubungi Admin Apabila Ada Kesalahan.
           </p>
         </div>
 

@@ -213,138 +213,167 @@
         </div>
 
         <!-- Detection Result -->
-        <div class="flex flex-col gap-4 w-full card p-6" v-else>
-          <div class="flex gap-8 items-center justify-between">
-            <!-- Detection -->
-            <div class="flex gap-4 items-center">
-              <!-- Image -->
-              <img
-                :src="
-                  detectionResult.detection.image
-                    ? imgUrl + detectionResult.detection.image
-                    : ''
-                "
-                alt=""
-                class="aspect-video max-sm:w-[80px] h-[80px] object-cover rounded-md"
-                v-if="detectionResult.detection.image"
-              />
+        <div class="flex flex-col gap-4 w-full card p-6 text-sm" v-else>
+          <div
+            class="flex gap-8 items-center justify-between card p-0 bg-white"
+          >
+            <table class="w-full text-sm text-left text-gray-500">
+              <tbody class="overflow-y-auto">
+                <!-- Detection -->
+                <tr class="bg-white border-b">
+                  <!-- Image -->
+                  <th scope="row" class="px-6 py-4 text-gray-900">
+                    <div class="flex gap-4 items-center">
+                      <!-- Image -->
+                      <img
+                        :src="
+                          detectionResult.detection.image
+                            ? imgUrl + detectionResult.detection.image
+                            : ''
+                        "
+                        alt=""
+                        class="aspect-video max-sm:w-[80px] h-[80px] object-cover rounded-md"
+                        v-if="detectionResult.detection.image"
+                      />
 
-              <div class="flex flex-col gap-1.5">
-                <!-- Plant Name -->
-                <div class="text-base font-semibold">
-                  {{ detectionResult.detection.plant.name }}
-                </div>
+                      <div class="flex flex-col gap-1.5">
+                        <!-- Plant Name -->
+                        <div class="text-base font-semibold">
+                          {{ detectionResult.detection.plant.name }}
+                        </div>
 
-                <!-- Created At -->
-                <div class="flex gap-1.5 items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    class="w-5 h-5 fill-gray-400 max-sm:hidden"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
+                        <!-- Created At -->
+                        <div class="flex gap-1.5 items-center">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="w-5 h-5 fill-gray-400 max-sm:hidden"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
 
-                  <div
-                    class="font-normal text-gray-500 flex flex-wrap gap-x-1.5"
-                  >
-                    <div class="whitespace-nowrap">
-                      {{ detectionResult.detection.created_at.split(' ')[0] }}
+                          <div
+                            class="font-normal text-gray-500 flex flex-wrap gap-x-1.5"
+                          >
+                            <div class="whitespace-nowrap">
+                              {{
+                                detectionResult.detection.created_at.split(
+                                  ' '
+                                )[0]
+                              }}
+                            </div>
+                            <div>
+                              {{
+                                detectionResult.detection.created_at.split(
+                                  ' '
+                                )[1]
+                              }}
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Username -->
+                        <div
+                          class="font-normal text-gray-500 flex gap-1.5 items-center"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="w-5 h-5 fill-gray-400 max-sm:hidden"
+                          >
+                            <path
+                              d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z"
+                            />
+                          </svg>
+                          <div>
+                            {{ detectionResult.detection.user.username }}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      {{ detectionResult.detection.created_at.split(' ')[1] }}
+                  </th>
+
+                  <!-- Result -->
+                  <td class="px-6 py-4">
+                    <div class="flex flex-col gap-1">
+                      <div
+                        :class="
+                          detectionResult.detection.result == 'error'
+                            ? 'text-red-600'
+                            : 'text-green-600'
+                        "
+                      >
+                        {{ detectionResult.detection.result }}
+                      </div>
+                      <div class="">
+                        {{ detectionResult.detection.confidence }}
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </td>
 
-                <!-- Username -->
-                <div
-                  class="font-normal text-gray-500 flex gap-1.5 items-center"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    class="w-5 h-5 fill-gray-400 max-sm:hidden"
-                  >
-                    <path
-                      d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z"
-                    />
-                  </svg>
-                  <div>{{ detectionResult.detection.user.username }}</div>
-                </div>
-              </div>
-            </div>
+                  <!-- Linked Disease -->
+                  <td class="px-6 py-4">
+                    <!-- Linked Disease -->
+                    <div
+                      class="flex flex-col gap-1"
+                      v-if="detectionResult.disease"
+                    >
+                      <div
+                        class="flex gap-2 p-2 items-center border border-gray-200 rounded-md hover:border-gray-300"
+                      >
+                        <!-- Images -->
+                        <img
+                          :src="
+                            detectionResult.disease.image
+                              ? imgUrl + detectionResult.disease.image
+                              : ''
+                          "
+                          alt=""
+                          class="w-[40px] h-[40px] object-cover rounded-sm max-sm:hidden"
+                          v-if="detectionResult.disease.image"
+                        />
 
-            <!-- Result -->
-            <div class="flex flex-col gap-2">
-              <div
-                :class="
-                  detectionResult.detection.result == 'error'
-                    ? 'text-red-600'
-                    : 'text-green-600'
-                "
-              >
-                {{ detectionResult.detection.result }}
-              </div>
-              <div class="font-normal text-gray-500">
-                {{ detectionResult.detection.confidence }}
-              </div>
-            </div>
+                        <div
+                          class="w-[40px] h-[40px] flex justify-center items-center bg-gray-200 rounded-sm"
+                          v-else
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            class="w-14 h-14 fill-gray-400"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </div>
 
-            <!-- Linked Disease -->
-            <div class="flex flex-col gap-1" v-if="detectionResult.disease">
-              <div
-                class="flex gap-2 p-2 items-center border border-gray-200 rounded-md hover:border-gray-300"
-              >
-                <!-- Images -->
-                <img
-                  :src="
-                    detectionResult.disease.image
-                      ? imgUrl + detectionResult.disease.image
-                      : ''
-                  "
-                  alt=""
-                  class="w-[40px] h-[40px] object-cover rounded-sm max-sm:hidden"
-                  v-if="detectionResult.disease.image"
-                />
-
-                <div
-                  class="w-[40px] h-[40px] flex justify-center items-center bg-gray-200 rounded-sm"
-                  v-else
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="w-14 h-14 fill-gray-400"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </div>
-
-                <!-- Title -->
-                <div
-                  class="text-md text-gray-900 font-medium line-clamp-2 w-full"
-                >
-                  {{ detectionResult.disease.name }}
-                </div>
-              </div>
-            </div>
+                        <!-- Title -->
+                        <div
+                          class="text-md text-gray-900 font-medium line-clamp-2 w-full"
+                        >
+                          {{ detectionResult.disease.name }}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
             <!-- Close Result -->
             <button
               type="button"
-              class="p-2 group"
+              class="btn btn-secondary p-3 self-center flex flex-row gap-1.5 items-center max-sm:p-[10px]"
               @click="
                 detectionResult = null
                 image = null
@@ -354,16 +383,17 @@
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                stroke-width="2"
                 stroke="currentColor"
-                class="w-6 h-6 stroke-gray-400 group-hover:stroke-red-600"
+                class="w-5 h-5"
               >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
                 />
               </svg>
+              <p class="text-sm">Try Again</p>
             </button>
           </div>
         </div>

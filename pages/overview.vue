@@ -41,17 +41,8 @@
               />
             </NuxtLink>
 
-            <!-- Product -->
-            <NuxtLink :to="{ name: 'articles' }" class="w-[300px] flex-grow">
-              <CardOverview
-                headline="Articles Created"
-                :value="overview.count_articles"
-                type="articles"
-              />
-            </NuxtLink>
-
             <!-- Articles -->
-            <NuxtLink :to="{ name: 'diseases' }" class="w-[300px] flex-grow">
+            <NuxtLink :to="{ name: 'articles' }" class="w-[300px] flex-grow">
               <CardOverview
                 headline="Articles Created"
                 :value="overview.count_articles"
@@ -68,7 +59,7 @@
               />
             </NuxtLink>
 
-            <!-- Diseases -->
+            <!-- Detection Models -->
             <NuxtLink :to="{ name: 'detections' }" class="w-[300px] flex-grow">
               <CardOverview
                 headline="Detection Models Created"

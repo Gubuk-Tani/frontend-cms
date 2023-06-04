@@ -213,7 +213,7 @@
         </div>
 
         <!-- Detection Result -->
-        <div class="flex flex-col gap-4 w-full card p-6 text-sm" v-else>
+        <div class="flex flex-col gap-4 w-full card p-0" v-else>
           <div
             class="flex gap-8 items-center justify-between card p-0 bg-white"
           >

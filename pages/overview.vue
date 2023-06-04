@@ -69,13 +69,13 @@
             </NuxtLink>
 
             <!-- Detections -->
-            <div class="w-[300px] flex-grow">
+            <NuxtLink :to="{ name: 'detections' }" class="w-[300px] flex-grow">
               <CardOverview
                 headline="Detections Created"
                 :value="overview.count_detections"
                 type="detections"
               />
-            </div>
+            </NuxtLink>
           </div>
         </div>
 
@@ -90,7 +90,10 @@
         <div class="flex flex-col gap-4 w-full">
           <!-- Show Content -->
           <div class="relative overflow-x-auto h-[500px]">
-            <table class="w-full text-sm text-left text-gray-500">
+            <table
+              class="w-full text-sm text-left text-gray-500"
+              v-if="listDetection.length > 0"
+            >
               <thead
                 class="text-xs text-gray-700 uppercase bg-gray-100 sticky inset-0"
               >
@@ -239,6 +242,9 @@
                 </tr>
               </tbody>
             </table>
+
+            <!-- Show Empty -->
+            <ShowEmpty v-else message="Oops! No detections made today :)" />
           </div>
 
           <!-- Pagination -->

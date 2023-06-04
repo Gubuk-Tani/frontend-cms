@@ -39,11 +39,21 @@
           Log in to start your session
         </p>
 
+        <!-- User Validation -->
         <div
           class="bg-red-100 rounded-md p-6"
           v-if="validation.meta?.status == 'error'"
         >
           <p class="text-red-600 text-center">{{ validation.meta?.message }}</p>
+        </div>
+
+        <div
+          class="bg-red-100 rounded-md p-6"
+          v-if="$auth.user && $auth.user.role != 'admin'"
+        >
+          <p class="text-red-600 text-center">
+            Anda bukan Admin. Hubungi Admin jika ada kesalahan.
+          </p>
         </div>
 
         <!-- Email -->
@@ -157,8 +167,11 @@ export default {
     async userLogin() {
       this.isLoading = true
 
+      this.validation = []
+
       try {
         let response = await this.$auth.loginWith('local', { data: this.login })
+
         this.$router.push({ name: 'overview' })
       } catch (err) {
         this.validation = err.response.data

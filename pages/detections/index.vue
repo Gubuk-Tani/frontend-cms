@@ -146,7 +146,7 @@
 <script>
 export default {
   layout: 'LayoutDashboard',
-  middleware: 'auth',
+  middleware: 'admin',
   data() {
     return {
       imgUrl: process.env.imgUrl,

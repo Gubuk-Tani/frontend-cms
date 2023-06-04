@@ -31,7 +31,7 @@
             type="text"
             id="table-search-diseases"
             class="block p-2 pl-10 text-sm text-gray-900 w-full h-full input-field"
-            placeholder="Search for diseases"
+            placeholder="Search for articles"
             v-model="query.search"
             v-on:keyup.enter="$fetch()"
           />

@@ -241,7 +241,7 @@
 
 <script>
 export default {
-  middleware: 'auth',
+  middleware: 'admin',
   layout: 'LayoutDashboard',
   data() {
     return {

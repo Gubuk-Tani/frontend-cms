@@ -332,41 +332,8 @@ export default {
     }
   },
   async fetch() {
-    // Get Overview
-    const resOverview = await this.$axios.get('/api/overview', {
-      params: {
-        range: this.range,
-      },
-    })
-
-    this.overview = resOverview.data.result
-
-    this.detectionWithDisease = []
-
-    // Get Detections
-    const resDetections = await this.$axios.get('/api/detection', {
-      params: this.query,
-    })
-
-    this.detections = resDetections.data.result
-
-    this.query.page = resDetections.data.result.current_page
-
-    // Linked Disease
-    for (let i = 0; i < this.detections.data.length; i++) {
-      const resLinkedDisease = await this.$axios.get('/api/disease', {
-        params: {
-          tag: this.detections.data[i].result,
-        },
-      })
-
-      const item = {
-        detection: this.detections.data[i],
-        disease: resLinkedDisease.data.result.disease,
-      }
-
-      this.detectionWithDisease.push(item)
-    }
+    await this.getOverview()
+    await this.getDetections()
   },
   computed: {
     // Get detection list
@@ -380,24 +347,64 @@ export default {
     },
   },
   methods: {
+    // Get Overview
+    async getOverview() {
+      const resOverview = await this.$axios.get('/api/overview', {
+        params: {
+          range: this.range,
+        },
+      })
+
+      this.overview = resOverview.data.result
+    },
+
+    async getDetections() {
+      this.detectionWithDisease = []
+
+      // Get Detections
+      const resDetections = await this.$axios.get('/api/detection', {
+        params: this.query,
+      })
+
+      this.detections = resDetections.data.result
+
+      this.query.page = resDetections.data.result.current_page
+
+      // Linked Disease
+      for (let i = 0; i < this.detections.data.length; i++) {
+        const resLinkedDisease = await this.$axios.get('/api/disease', {
+          params: {
+            tag: this.detections.data[i].result,
+          },
+        })
+
+        const item = {
+          detection: this.detections.data[i],
+          disease: resLinkedDisease.data.result.disease,
+        }
+
+        this.detectionWithDisease.push(item)
+      }
+    },
+
     // Show by Range
     showByRange(range) {
       this.range = range
 
-      this.$fetch()
+      this.getOverview()
     },
 
     // Change Page
     changePage(page) {
       this.query.page = page
-      this.$fetch()
+      this.getDetections()
     },
 
     // Previous Page
     previousPage() {
       if (this.query.page != 1) {
         this.query.page = this.query.page - 1
-        this.$fetch()
+        this.getDetections()
       }
     },
 
@@ -405,7 +412,7 @@ export default {
     nextPage() {
       if (this.query.page != this.detections.last_page) {
         this.query.page = this.query.page + 1
-        this.$fetch()
+        this.getDetections()
       }
     },
   },

@@ -2,7 +2,7 @@
 
 <script>
 export default {
-  middleware: 'admin',
+  middleware: 'auth',
   layout: 'LayoutDashboard',
   fetch() {
     this.$router.push({ name: 'overview' })

@@ -215,9 +215,13 @@
         <!-- Detection Result -->
         <div class="flex flex-col gap-4 w-full card p-0" v-else>
           <div
-            class="flex gap-8 items-center justify-between card p-0 bg-white"
+            class="flex gap-4 items-center justify-between card p-0 bg-white pb-6"
           >
-            <table class="w-full text-sm text-left text-gray-500">
+            <!-- Success -->
+            <table
+              class="w-full text-sm text-left text-gray-500"
+              v-if="detectionMeta.status == 'success'"
+            >
               <tbody class="overflow-y-auto">
                 <!-- Detection -->
                 <tr class="bg-white border-b">
@@ -370,7 +374,30 @@
               </tbody>
             </table>
 
-            <!-- Close Result -->
+            <!-- Error -->
+            <div
+              class="bg-white border-b w-full px-6 py-6 flex gap-4 items-center justify-center"
+              v-else
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-12 h-12 fill-yellow-400"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+
+              <div class="flex flex-col gap-1.5 text-red-600 font-semibold">
+                {{ detectionMeta.message }}
+              </div>
+            </div>
+
+            <!-- Try Again -->
             <button
               type="button"
               class="btn btn-secondary p-3 self-center flex flex-row gap-1.5 items-center max-sm:p-[10px]"
@@ -445,6 +472,7 @@ export default {
 
       // Detection
       image: null,
+      detectionMeta: null,
       detectionResult: null,
 
       modal: false,
@@ -455,6 +483,9 @@ export default {
     }
   },
   async fetch() {
+    this.detectionMeta = null
+    this.detectionResult = null
+
     this.plant_id = this.$route.params.id
 
     const resPlant = await this.$axios.get(`/api/plant/${this.plant_id}`)
@@ -508,9 +539,18 @@ export default {
       detectionData.append('plant_id', this.plant_id)
       detectionData.append('image', this.image)
 
-      const resDetect = await this.$axios.post('/api/detection', detectionData)
+      try {
+        const resDetect = await this.$axios.post(
+          '/api/detection',
+          detectionData
+        )
 
-      this.detectionResult = resDetect.data.result
+        this.detectionMeta = resDetect.data.meta
+        this.detectionResult = resDetect.data.result
+      } catch (error) {
+        this.detectionMeta = error.response.data.meta
+        this.detectionResult = 'error'
+      }
     },
   },
 }

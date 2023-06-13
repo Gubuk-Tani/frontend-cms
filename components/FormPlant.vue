@@ -127,7 +127,7 @@ export default {
       let data = new FormData()
 
       for (const [key, value] of Object.entries(this.plant)) {
-        if (key == 'image' && value == this.current_image) {
+        if (key == 'image' && typeof value == 'string') {
           continue
         }
 

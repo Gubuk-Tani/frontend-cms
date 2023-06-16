@@ -71,10 +71,10 @@
         <div class="flex flex-col gap-4 w-full">
           <!-- Show Content -->
           <div
-            class="overflow-x-auto flex flex-wrap max-sm:flex-col gap-5 justify-start pb-4"
+            class="overflow-x-auto flex flex-wrap max-sm:flex-col gap-5 pb-4"
           >
             <div
-              class="bg-white rounded-md overflow-clip p-0 w-[300px] max-sm:w-full cursor-pointer shadow-sm hover:shadow-lg group flex flex-col justify-start"
+              class="bg-white rounded-md overflow-clip p-0 flex-auto w-[250px] max-sm:w-full cursor-pointer shadow-sm hover:shadow-lg group flex flex-col justify-start"
               v-for="item in listDiseases"
               @click="showModal('formDisease', item.id)"
             >

@@ -82,7 +82,7 @@
         <!-- Todays Detections Headline -->
         <div class="flex justify-between items-center gap-4">
           <h1 class="font-bold text-2xl text-dark self-center py-1">
-            Today's Detections
+            Latest Detections
           </h1>
         </div>
 
@@ -331,7 +331,7 @@ export default {
       range: '',
 
       query: {
-        range: 'today',
+        range: null,
         limit: 10,
         page: 1,
       },

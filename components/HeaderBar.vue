@@ -64,7 +64,7 @@
                 : '../assets/images/user.png'
             "
             alt=""
-            class="w-[32px] mr-1"
+            class="w-10 h-10 rounded-full mr-1"
           />
           {{ this.$auth.user.name }}
           <svg

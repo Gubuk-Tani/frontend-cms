@@ -35,7 +35,7 @@
         <input
           type="text"
           class="input-field"
-          placeholder="Full Name"
+          placeholder="Title"
           v-model="article.title"
         />
 

@@ -147,7 +147,7 @@
                       "
                       alt=""
                       class="w-[40px] h-[40px] object-cover rounded-sm"
-                      v-if="item.article.article_images[0].image"
+                      v-if="item.article.article_images[0]"
                     />
 
                     <div
@@ -158,7 +158,7 @@
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         fill="currentColor"
-                        class="w-14 h-14 fill-gray-400"
+                        class="w-6 h-6 fill-gray-400"
                       >
                         <path
                           fill-rule="evenodd"

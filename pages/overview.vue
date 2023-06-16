@@ -100,7 +100,7 @@
                 <tr>
                   <th scope="col" class="px-6 py-3">Detection</th>
                   <th scope="col" class="px-6 py-3">Result</th>
-                  <th scope="col" class="px-6 py-3">Disease</th>
+                  <th scope="col" class="px-6 py-3 max-sm:hidden">Disease</th>
                 </tr>
               </thead>
               <tbody class="overflow-y-auto">
@@ -194,7 +194,7 @@
                   </td>
 
                   <!-- Linked Disease -->
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 max-sm:hidden">
                     <!-- Linked Disease -->
                     <div class="flex flex-col gap-1" v-if="item.disease">
                       <div

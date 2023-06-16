@@ -486,6 +486,8 @@ export default {
     this.detectionMeta = null
     this.detectionResult = null
 
+    this.labelsWithLinkedDisease = []
+
     this.plant_id = this.$route.params.id
 
     const resPlant = await this.$axios.get(`/api/plant/${this.plant_id}`)

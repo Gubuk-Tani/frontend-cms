@@ -130,8 +130,23 @@
 
       <!-- Avatar -->
       <div class="form-group">
-        <label for="" class="input-label">Image</label>
+        <label for="" class="input-label">Avatar</label>
         <InputImage v-model="user.avatar" />
+      </div>
+
+      <!-- Type -->
+      <div class="form-group">
+        <label for="" class="input-label required">Type</label>
+
+        <select class="input-field" v-model="user.type">
+          <option value="regular">Regular</option>
+          <option value="premium">Premium</option>
+        </select>
+
+        <!-- Validation -->
+        <p class="text-red-500 text-xs italic" v-if="validation.errors?.type">
+          {{ validation.errors?.type[0] }}
+        </p>
       </div>
 
       <!-- Role -->
@@ -197,6 +212,7 @@ export default {
         password: null,
         city: null,
         avatar: null,
+        type: null,
         role: null,
         disabled_at: null,
       },
@@ -218,6 +234,7 @@ export default {
       this.user.email = resUser.data.result.user.email
       this.user.city = resUser.data.result.user.city
       this.user.avatar = resUser.data.result.user.avatar
+      this.user.type = resUser.data.result.user.type
       this.user.role = resUser.data.result.user.role
       this.user.disabled_at = resUser.data.result.user.disabled_at
 
@@ -230,6 +247,7 @@ export default {
       this.user.email = null
       this.user.city = null
       this.user.avatar = null
+      this.user.type = null
       this.user.role = null
       this.user.disabled_at = null
 

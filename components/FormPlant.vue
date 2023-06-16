@@ -163,7 +163,7 @@ export default {
 
       this.plant_id = null
       this.$emit('close-form')
-      this.refreshData()
+      this.$router.push({ name: 'detections' })
     },
 
     // Refresh Data

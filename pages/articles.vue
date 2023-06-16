@@ -140,7 +140,7 @@
                 </div>
 
                 <!-- Tags -->
-                <div class="flex flex-wrap items-start mt-2">
+                <div class="flex flex-wrap gap-2 items-start mt-2">
                   <div
                     class="text-sm text-gray-400 bg-gray-100 rounded-md py-1 px-2"
                     v-for="tag in item.tags"
